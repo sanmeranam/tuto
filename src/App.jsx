@@ -1,48 +1,20 @@
-import { useState } from 'react';
-import './App.css'
-import User from './components/User'
-import Form from './components/Form';
+import React from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Layout from './pages/Layout'
+import HomePage from './pages/Home.page'
+import AbputPage from './pages/Abput.page'
+import Page404 from './pages/NoPage'
 
-function App() {
-
-  const [users, setUsers] = useState([]);
-
-  const onUpdate = (user, index) => {
-    console.log('Updated', user)
-    const _users = [...users];
-    _users[index] = user;
-    setUsers(_users);
-  };
-
-  const onClickAddButton = () => {
-    const _users = [...users];
-    _users.push('User' + (_users.length + 1));
-    setUsers(_users);
-  }
-
-
+export default function App() {
   return (
-    <>
-    <Form/>
-      <h1>Hello</h1>
-      <button onClick={onClickAddButton}>Add User</button>
-      <button onClick={()=>{
-        const _users = [...users];
-        _users[Math.round(Math.random()*_users.length)] = 'User ' + Math.random() + 'Updated';
-        setUsers(_users);
-      
-      }}>Update User</button>
-      <div style={{ display: 'flex', flexFlow:'wrap' }}>
-        {
-          users.map((user, index) => {
-            return <User key={index} name={user} edit={<span>@</span>} onUpdate={(u)=>{
-              onUpdate(u, index)
-            }} />
-          })
-        }
-      </div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="about/:id" element={<AbputPage />} />
+          <Route path="*" element={<Page404 />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
-
-export default App
