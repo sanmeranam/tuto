@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link, Outlet } from 'react-router-dom'
+import AppContext from '../AppContext'
 
 export default function Layout() {
+    const { cart } = useContext(AppContext)
+
     return (
         <div>
             <header style={{
@@ -11,17 +14,14 @@ export default function Layout() {
 
             }}>Layout Header
                 <div style={{ display: 'flex' }}>
-                    <Link to="/">Home</Link>
-                    <Link to="about/234234">About</Link>
+                    <Link to="/" style={{ padding: '0px 10px' }}>Home</Link>
+                    <Link to="cart" style={{ padding: '0px 10px' }}>Cart ({cart.length})</Link>
+                    <Link to="about/234234" style={{ padding: '0px 10px' }}>About</Link>
                 </div>
             </header>
-            <Outlet />
-            <footer style={{
-                padding: '10px',
-                backgroundColor: 'black',
-                color: 'white'
-
-            }}>Layout Footer</footer>
+            <div style={{ padding: '10px' }}>
+                <Outlet />
+            </div>
         </div>
     )
 }
